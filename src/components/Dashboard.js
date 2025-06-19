@@ -1,28 +1,31 @@
 import React from 'react';
 
-function Dashboard() {
+function Dashboard({ expenses }) {
+  const groupedByCategory = expenses.reduce((acc, expense) => {
+    const cat = expense.category;
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(expense);
+    return acc;
+  }, {});
+
   return (
-    <div>
-      <h2>Welcome back!</h2>
-      <p>Here’s an overview of your finances.</p>
-      <div className="row mt-4">
-        <div className="col-md-4">
-          <div className="card shadow-sm">
-            <div className="card-body">
-              <h5 className="card-title">Total Income</h5>
-              <p className="card-text">KES 75,000</p>
-            </div>
-          </div>
+    <div className="mt-4">
+      <h4>Expenses by Category</h4>
+      {Object.entries(groupedByCategory).map(([category, items]) => (
+        <div key={category} className="mb-3">
+          <h5>{category}</h5>
+          <ul className="list-group">
+            {items.map((item) => (
+              <li key={item.id} className="list-group-item d-flex justify-content-between">
+                <span>{item.title}</span>
+                <span>
+                  KSh {item.amount.toLocaleString('en-KE', { minimumFractionDigits: 2 })} | {item.date}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="col-md-4">
-          <div className="card shadow-sm">
-            <div className="card-body">
-              <h5 className="card-title">Expenses</h5>
-              <p className="card-text">KES 42,000</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

@@ -1,22 +1,28 @@
-import React from 'react';
-import Sidebar from './components/Sidebar';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
+import ExpenseForm from './components/ExpenseForm';
 
 function App() {
-return (
-<div className="d-flex min-vh-100">
-<div className="bg-light border-end" style={{ width: '250px' }}>
-<Sidebar />
-</div>
-<div className="flex-grow-1 d-flex flex-column">
-<Navbar />
-<main className="flex-grow-1 bg-body p-4 overflow-auto">
-<Dashboard />
-</main>
-</div>
-</div>
-);
+  const [expenses, setExpenses] = useState([]);
+
+  const handleAddExpense = (expense) => {
+    setExpenses([...expenses, expense]);
+  };
+
+  return (
+    <div className="d-flex">
+      <Sidebar />
+      <div className="flex-grow-1">
+        <Navbar />
+        <main className="p-4 bg-light min-vh-100">
+          <ExpenseForm onAddExpense={handleAddExpense} />
+          <Dashboard expenses={expenses} />
+        </main>
+      </div>
+    </div>
+  );
 }
 
 export default App;
