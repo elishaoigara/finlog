@@ -1,42 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ExpenseChart from './ExpenseChart';
 
 function Dashboard({ expenses }) {
-  const total = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredExpenses = expenses.filter(expense =>
+    expense.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="container mt-4">
+    <div>
       <h2 className="mb-4">Dashboard</h2>
 
-      <div className="row">
-        <div className="col-md-6">
-          <div className="card text-white bg-success mb-3">
-            <div className="card-body">
-              <h5 className="card-title">Total Expenses</h5>
-              <p className="card-text fw-bold">KSh {total.toLocaleString()}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <input
+        type="text"
+        className="form-control mb-3"
+        placeholder="Search expenses..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
 
-      <h4 className="mt-5">All Expenses</h4>
-      <table className="table table-striped mt-3">
+      <ExpenseChart expenses={filteredExpenses} />
+
+      <table className="table table-bordered table-striped mt-4">
         <thead>
           <tr>
             <th>Name</th>
-            <th>Amount (KSh)</th>
+            <th>Amount (Ksh)</th>
             <th>Category</th>
-            <th>Date</th>
           </tr>
         </thead>
         <tbody>
-          {expenses.map((expense, index) => (
-            <tr key={index}>
-              <td>{expense.name}</td>
-              <td>{parseFloat(expense.amount).toLocaleString()}</td>
-              <td>{expense.category}</td>
-              <td>{new Date(expense.date).toLocaleDateString()}</td>
+          {filteredExpenses.length > 0 ? (
+            filteredExpenses.map((expense, index) => (
+              <tr key={index}>
+                <td>{expense.name}</td>
+                <td>Ksh {expense.amount}</td>
+                <td>{expense.category}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="text-center">
+                No matching expenses found.
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

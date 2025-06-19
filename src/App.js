@@ -2,23 +2,24 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
-import ExpenseForm from './components/ExpenseForm';
+import AddExpenseForm from './components/AddExpenseForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
   const [expenses, setExpenses] = useState([]);
 
-  const addExpense = (expense) => {
+  const handleAddExpense = (expense) => {
     setExpenses([...expenses, expense]);
   };
 
   return (
-    <div className="d-flex">
+    <div className="d-flex" style={{ height: '100vh' }}>
       <Sidebar />
-      <div className="flex-grow-1">
+      <div className="flex-grow-1 d-flex flex-column">
         <Navbar />
-        <main className="container mt-4">
-          <ExpenseForm onAdd={addExpense} />
+        <main className="p-4 flex-grow-1 bg-light overflow-auto">
+          <AddExpenseForm onAdd={handleAddExpense} />
           <Dashboard expenses={expenses} />
         </main>
       </div>
