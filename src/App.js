@@ -4,17 +4,19 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  return (
-    <div className="flex h-screen">
-      <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Navbar />
-        <main className="p-6 bg-gray-100 flex-1 overflow-y-auto">
-          <Dashboard />
-        </main>
-      </div>
-    </div>
-  );
+return (
+<div className="d-flex min-vh-100">
+<div className="bg-light border-end" style={{ width: '250px' }}>
+<Sidebar />
+</div>
+<div className="flex-grow-1 d-flex flex-column">
+<Navbar />
+<main className="flex-grow-1 bg-body p-4 overflow-auto">
+<Dashboard />
+</main>
+</div>
+</div>
+);
 }
 
 export default App;

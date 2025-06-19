@@ -1,11 +1,11 @@
 import React from 'react';
 
 function Navbar() {
-  return (
-    <header className="bg-white shadow-md px-6 py-4">
-      <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
-    </header>
-  );
+return (
+<nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom px-3">
+<span className="navbar-brand mb-0 h5">Welcome back!</span>
+</nav>
+);
 }
 
 export default Navbar;
