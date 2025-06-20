@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import {
+  FaArrowUp,
+  FaArrowDown,
+  FaChartPie,
+} from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#a86efc', '#ec407a'];
@@ -24,6 +36,24 @@ function Dashboard({ expenses, onDelete, onEdit }) {
     value,
   }));
 
+  const topCategory = chartData.reduce(
+    (top, current) => (current.value > top.value ? current : top),
+    { name: 'None', value: 0 }
+  );
+
+  const last7days = new Date();
+  last7days.setDate(last7days.getDate() - 7);
+  const recentExpenses = expenses.filter(e => new Date(e.date) >= last7days);
+  const lastWeekTotal = recentExpenses.reduce((sum, e) => sum + Number(e.amount), 0);
+  const previousWeekExpenses = expenses.filter(e => {
+    const d = new Date(e.date);
+    return d < last7days && d >= new Date(last7days.setDate(last7days.getDate() - 7));
+  });
+  const previousWeekTotal = previousWeekExpenses.reduce((sum, e) => sum + Number(e.amount), 0);
+
+  const diff = lastWeekTotal - previousWeekTotal;
+  const trendPercent = previousWeekTotal === 0 ? 100 : Math.abs(((diff / previousWeekTotal) * 100).toFixed(0));
+
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -42,7 +72,56 @@ function Dashboard({ expenses, onDelete, onEdit }) {
         </select>
       </div>
 
-      {/* Pie Chart Section */}
+      {/* Smart Insights */}
+      <div className="row mb-4">
+        <div className="col-md-4">
+          <div className="card border-0 shadow-sm text-white" style={{ background: '#1976d2' }}>
+            <div className="card-body d-flex align-items-center">
+              {diff > 0 ? (
+                <FaArrowUp className="me-3 fs-3 text-white" />
+              ) : (
+                <FaArrowDown className="me-3 fs-3 text-white" />
+              )}
+              <div>
+                <h6 className="mb-1 text-white">Spending Trend</h6>
+                <p className="mb-0">
+                  {diff > 0
+                    ? `Up by ${trendPercent}% from last week`
+                    : `Down by ${trendPercent}% from last week`}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-4">
+          <div className="card border-0 shadow-sm text-white" style={{ background: '#2196f3' }}>
+            <div className="card-body d-flex align-items-center">
+              <FaChartPie className="me-3 fs-3 text-white" />
+              <div>
+                <h6 className="mb-1 text-white">Top Category</h6>
+                <p className="mb-0">
+                  {topCategory.name} (Ksh {topCategory.value.toLocaleString('en-KE')})
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-4">
+          <div className="card border-0 shadow-sm text-white" style={{ background: '#42a5f5' }}>
+            <div className="card-body d-flex align-items-center">
+              <FaChartPie className="me-3 fs-3 text-white" />
+              <div>
+                <h6 className="mb-1 text-white">Total Spending</h6>
+                <p className="mb-0">Ksh {total.toLocaleString('en-KE')}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Pie Chart */}
       <div className="mb-4" style={{ height: 300 }}>
         <ResponsiveContainer>
           <PieChart>
@@ -64,24 +143,6 @@ function Dashboard({ expenses, onDelete, onEdit }) {
             <Legend />
           </PieChart>
         </ResponsiveContainer>
-      </div>
-
-      {/* Total and Per Category */}
-      <div className="mb-4">
-        <h5>Total Expenses: Ksh {total.toLocaleString('en-KE')}</h5>
-        <ul className="list-group">
-          {Object.entries(categoryTotals).map(([category, amount]) => (
-            <li
-              className="list-group-item d-flex justify-content-between align-items-center"
-              key={category}
-            >
-              {category}
-              <span className="badge bg-primary rounded-pill">
-                Ksh {amount.toLocaleString('en-KE')}
-              </span>
-            </li>
-          ))}
-        </ul>
       </div>
 
       {/* Expense Table */}

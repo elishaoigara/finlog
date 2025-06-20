@@ -1,5 +1,11 @@
 /* index.css */
 body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
