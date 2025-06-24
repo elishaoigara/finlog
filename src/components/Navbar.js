@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -29,8 +30,8 @@ function Navbar() {
           FINLOG
         </h4>
 
-        {/* Logout Button */}
-        <button
+        {/* Animated Logout Button */}
+        <motion.button
           onClick={handleLogout}
           className="btn btn-light btn-sm ms-auto"
           style={{
@@ -38,9 +39,14 @@ function Navbar() {
             borderRadius: '20px',
             boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
           }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           Logout
-        </button>
+        </motion.button>
       </div>
     </nav>
   );
