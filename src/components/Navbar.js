@@ -11,16 +11,20 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark" style={{
+    <nav className="navbar navbar-expand-lg navbar-dark shadow-sm" style={{
       background: 'linear-gradient(to right, #0d6efd, #0b5ed7)',
-      color: '#fff',
-      padding: '10px 20px',
-      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)'
+      padding: '10px 20px'
     }}>
       <div className="container-fluid">
-        <h4 className="navbar-brand mb-0">FINLOG</h4>
+        {/* Center title on mobile using position-absolute & transform */}
+        <h4 className="navbar-brand mx-auto d-lg-none position-absolute start-50 translate-middle-x">
+          FINLOG
+        </h4>
 
-        {/* Toggle Button for Mobile */}
+        {/* Desktop title on left */}
+        <h4 className="navbar-brand d-none d-lg-block mb-0">FINLOG</h4>
+
+        {/* Toggle Button */}
         <button
           className="navbar-toggler"
           type="button"
@@ -35,22 +39,27 @@ function Navbar() {
 
         {/* Collapsible Content */}
         <div className="collapse navbar-collapse justify-content-end" id="navbarContent">
-          <div className="d-flex align-items-center gap-3 mt-3 mt-lg-0">
-            <span style={{ fontSize: '1rem' }}>Welcome back</span>
-            <FaUserCircle size={28} className="text-white" />
-            <button
-              onClick={handleLogout}
-              className="btn btn-light btn-sm px-3 py-1"
-              style={{
-                fontWeight: '500',
-                borderRadius: '20px',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
-                transition: '0.3s ease',
-              }}
-            >
-              Logout
-            </button>
-          </div>
+          <ul className="navbar-nav ms-auto d-flex align-items-lg-center gap-3">
+            <li className="nav-item d-none d-lg-inline text-white">
+              Welcome back
+            </li>
+            <li className="nav-item">
+              <FaUserCircle size={24} className="text-white" />
+            </li>
+            <li className="nav-item">
+              <button
+                onClick={handleLogout}
+                className="btn btn-light btn-sm px-3 py-1"
+                style={{
+                  fontWeight: '500',
+                  borderRadius: '20px',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+                }}
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
