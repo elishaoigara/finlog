@@ -45,9 +45,12 @@ function Dashboard({ expenses, onDelete, onEdit }) {
   last7days.setDate(last7days.getDate() - 7);
   const recentExpenses = expenses.filter(e => new Date(e.date) >= last7days);
   const lastWeekTotal = recentExpenses.reduce((sum, e) => sum + Number(e.amount), 0);
+
+  const previousWeekStart = new Date();
+  previousWeekStart.setDate(last7days.getDate() - 7);
   const previousWeekExpenses = expenses.filter(e => {
     const d = new Date(e.date);
-    return d < last7days && d >= new Date(last7days.setDate(last7days.getDate() - 7));
+    return d < last7days && d >= previousWeekStart;
   });
   const previousWeekTotal = previousWeekExpenses.reduce((sum, e) => sum + Number(e.amount), 0);
 
@@ -56,10 +59,10 @@ function Dashboard({ expenses, onDelete, onEdit }) {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h4>Welcome back!</h4>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-3">
+        <h4 className="mb-0">Welcome back!</h4>
         <select
-          className="form-select w-auto"
+          className="form-select w-100 w-md-auto"
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
         >
@@ -74,7 +77,7 @@ function Dashboard({ expenses, onDelete, onEdit }) {
 
       {/* Smart Insights */}
       <div className="row mb-4">
-        <div className="col-md-4">
+        <div className="col-12 col-md-4 mb-3">
           <div className="card border-0 shadow-sm text-white" style={{ background: '#1976d2' }}>
             <div className="card-body d-flex align-items-center">
               {diff > 0 ? (
@@ -94,7 +97,7 @@ function Dashboard({ expenses, onDelete, onEdit }) {
           </div>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-12 col-md-4 mb-3">
           <div className="card border-0 shadow-sm text-white" style={{ background: '#2196f3' }}>
             <div className="card-body d-flex align-items-center">
               <FaChartPie className="me-3 fs-3 text-white" />
@@ -108,7 +111,7 @@ function Dashboard({ expenses, onDelete, onEdit }) {
           </div>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-12 col-md-4 mb-3">
           <div className="card border-0 shadow-sm text-white" style={{ background: '#42a5f5' }}>
             <div className="card-body d-flex align-items-center">
               <FaChartPie className="me-3 fs-3 text-white" />
@@ -146,7 +149,7 @@ function Dashboard({ expenses, onDelete, onEdit }) {
       </div>
 
       {/* Expense Table */}
-      <div className="table-responsive">
+      <div className="table-responsive p-2">
         <table className="table table-bordered table-striped">
           <thead className="table-light">
             <tr>
