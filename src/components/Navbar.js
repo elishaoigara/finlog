@@ -10,6 +10,8 @@ function Navbar() {
     navigate('/login');
   };
 
+  const finlogLetters = "FINLOG".split("");
+
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark shadow-sm"
@@ -19,18 +21,37 @@ function Navbar() {
       }}
     >
       <div className="container-fluid d-flex justify-content-between align-items-center">
-        {/* Centered FINLOG on mobile, left on desktop */}
-        <h4
-          className="navbar-brand mb-0 mx-auto d-lg-none position-absolute start-50 translate-middle-x"
-          style={{ fontWeight: 600 }}
-        >
-          FINLOG
-        </h4>
-        <h4 className="navbar-brand mb-0 d-none d-lg-block" style={{ fontWeight: 600 }}>
-          FINLOG
-        </h4>
 
-        {/* Animated Logout Button */}
+        {/* Typewriter Brand Animation */}
+        <motion.div
+          className="navbar-brand mb-0 mx-auto d-lg-none position-absolute start-50 translate-middle-x"
+          style={{ fontWeight: 700, display: 'flex', gap: '2px' }}
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+        >
+          {finlogLetters.map((letter, index) => (
+            <motion.span
+              key={index}
+              variants={{
+                hidden: { opacity: 0, y: -10 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              transition={{ duration: 0.3 }}
+              style={{ fontSize: '1.5rem', color: '#fff' }}
+            >
+              {letter}
+            </motion.span>
+          ))}
+        </motion.div>
+
+        {/* Logout Button */}
         <motion.button
           onClick={handleLogout}
           className="btn btn-light btn-sm ms-auto"
@@ -41,7 +62,7 @@ function Navbar() {
           }}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 1 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
