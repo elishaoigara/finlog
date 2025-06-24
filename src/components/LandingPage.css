@@ -1,0 +1,89 @@
+/* General layout */
+.hero-section {
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+  color: #fff;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-section .btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 30px;
+  transition: background 0.3s ease;
+}
+
+.hero-section .btn:hover {
+  background-color: #fff;
+  color: #0d6efd;
+}
+
+/* Testimonials */
+.testimonials {
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+}
+
+.testimonials h3 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.testimonial {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  font-style: italic;
+  transition: transform 0.3s ease;
+}
+
+.testimonial:hover {
+  transform: translateY(-5px);
+}
+
+/* CTA Section */
+.cta {
+  background-color: #0b5ed7;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.cta h4 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.cta .btn {
+  font-size: 1rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  transition: background 0.3s ease;
+}
+
+.cta .btn:hover {
+  background-color: #fff;
+  color: #0b5ed7;
+}

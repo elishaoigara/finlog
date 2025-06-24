@@ -55,7 +55,9 @@ function App() {
                 <>
                   <AddExpenseForm
                     onAdd={addExpense}
-                    editingExpense={editingIndex !== null ? expenses[editingIndex] : null}
+                    editingExpense={
+                      editingIndex !== null ? expenses[editingIndex] : null
+                    }
                   />
                   <Dashboard
                     expenses={expenses}
