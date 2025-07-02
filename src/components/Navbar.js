@@ -5,13 +5,12 @@ import { FaMoon, FaSun } from 'react-icons/fa';
 
 function Navbar({ darkMode, setDarkMode }) {
   const navigate = useNavigate();
+  const finlogLetters = 'FINLOG'.split('');
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
     navigate('/login');
   };
-
-  const finlogLetters = "FINLOG".split("");
 
   return (
     <nav
@@ -22,22 +21,23 @@ function Navbar({ darkMode, setDarkMode }) {
         background: darkMode
           ? 'linear-gradient(to right, #1c1c1c, #333)'
           : 'linear-gradient(to right, #0d6efd, #0b5ed7)',
-        padding: '10px 20px',
+        padding: '0.75rem 1rem',
         color: darkMode ? '#eaeaea' : '#fff',
+        zIndex: 1000,
       }}
     >
       <div className="container-fluid d-flex justify-content-between align-items-center">
 
-        {/* Animated FINLOG Brand */}
+        {/* Animated Brand for all screen sizes */}
         <motion.div
-          className="navbar-brand mb-0 mx-auto d-lg-none position-absolute start-50 translate-middle-x"
-          style={{ fontWeight: 700, display: 'flex', gap: '2px', color: 'inherit' }}
+          className="navbar-brand mb-0 d-flex gap-1 align-items-center"
+          style={{ fontWeight: 700, fontSize: '1.5rem', color: 'inherit' }}
           initial="hidden"
           animate="visible"
           variants={{
             visible: {
               transition: {
-                staggerChildren: 0.15,
+                staggerChildren: 0.12,
               },
             },
           }}
@@ -50,21 +50,21 @@ function Navbar({ darkMode, setDarkMode }) {
                 visible: { opacity: 1, y: 0 },
               }}
               transition={{ duration: 0.3 }}
-              style={{ fontSize: '1.5rem', color: 'inherit' }}
+              style={{ color: 'inherit' }}
             >
               {letter}
             </motion.span>
           ))}
         </motion.div>
 
-        {/* Toggle + Logout */}
-        <div className="ms-auto d-flex align-items-center gap-2">
+        {/* Right Side: Toggle + Logout */}
+        <div className="d-flex align-items-center gap-2 ms-auto">
 
           {/* Dark Mode Toggle */}
           <motion.button
             onClick={() => setDarkMode(!darkMode)}
-            className="btn btn-outline-light btn-sm"
-            style={{ borderRadius: '50%' }}
+            className="btn btn-outline-light btn-sm d-flex align-items-center justify-content-center"
+            style={{ borderRadius: '50%', width: 36, height: 36 }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1, duration: 0.4 }}
@@ -72,7 +72,7 @@ function Navbar({ darkMode, setDarkMode }) {
             whileTap={{ scale: 0.9 }}
             aria-label="Toggle Dark Mode"
           >
-            {darkMode ? <FaSun className="icon" /> : <FaMoon className="icon" />}
+            {darkMode ? <FaSun /> : <FaMoon />}
           </motion.button>
 
           {/* Logout Button */}
@@ -82,7 +82,9 @@ function Navbar({ darkMode, setDarkMode }) {
             style={{
               fontWeight: '500',
               borderRadius: '20px',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+              padding: '0.3rem 0.8rem',
+              fontSize: '0.875rem',
+              whiteSpace: 'nowrap',
             }}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}

@@ -4,6 +4,24 @@ import { motion } from 'framer-motion';
 import './LandingPage.css';
 import { FaMoon, FaSun, FaArrowRight } from 'react-icons/fa';
 
+const features = [
+  {
+    title: 'Track Your Expenses',
+    description: 'Easily record and categorize all your transactions in one place.',
+    icon: '💸',
+  },
+  {
+    title: 'Smart Budgeting',
+    description: 'Set and manage your budget with smart insights and suggestions.',
+    icon: '📊',
+  },
+  {
+    title: 'Insights & Reports',
+    description: 'Visualize your spending trends and stay in control.',
+    icon: '📈',
+  },
+];
+
 const testimonials = [
   {
     name: 'Jane M.',
@@ -30,22 +48,22 @@ function LandingPage() {
       {/* Hero Section */}
       <header className={`hero ${darkMode ? 'hero-dark' : ''}`}>
         <div className="theme-toggle">
-          <button onClick={() => setDarkMode(!darkMode)} className="btn toggle-btn" aria-label="Toggle dark mode">
+          <button onClick={() => setDarkMode(!darkMode)} className="btn toggle-btn">
             {darkMode ? <FaSun /> : <FaMoon />}
           </button>
         </div>
         <motion.h1
           className="hero-title"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <span className="typewriter">Welcome to <strong>FinLog</strong></span>
+          Unlock Your Financial Potential with <strong>FinLog</strong>
         </motion.h1>
         <motion.p
           className="hero-subtitle"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 1 }}
         >
           Track your expenses. Understand your finances. Own your future.
@@ -61,7 +79,29 @@ function LandingPage() {
         </motion.div>
       </header>
 
-      {/* Testimonials Section */}
+      {/* Feature Highlights */}
+      <section className="features-section">
+        <div className="container">
+          <h2 className="section-title">Why Choose FinLog?</h2>
+          <div className="features-grid">
+            {features.map((feature, index) => (
+              <motion.div
+                className="feature-box"
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+              >
+                <div className="feature-icon">{feature.icon}</div>
+                <h4>{feature.title}</h4>
+                <p>{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
       <section className="testimonials">
         <div className="container">
           <h2 className="section-title">What Our Users Say</h2>
@@ -91,7 +131,7 @@ function LandingPage() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h3>Ready to take control of your finances?</h3>
+          <h3>Start Your Journey to Financial Freedom</h3>
           <p>Join thousands of users making smarter financial decisions.</p>
           <div className="cta-buttons">
             <a href="/signup" className="btn primary-btn">Join Now</a>
