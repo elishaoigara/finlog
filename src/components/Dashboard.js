@@ -59,8 +59,7 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
   const diff = lastWeekTotal - previousWeekTotal;
   const trendPercent = previousWeekTotal === 0 ? 100 : Math.abs(((diff / previousWeekTotal) * 100).toFixed(0));
 
-  // Style helper for dark-aware card backgrounds
-  const getCardClass = (baseColor) =>
+  const getCardClass = () =>
     `card border-0 shadow-sm text-white rounded-4 ${darkMode ? 'bg-dark' : ''}`;
 
   return (
@@ -83,7 +82,7 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
         </select>
       </div>
 
-      {/* Smart Insights Cards */}
+      {/* Insight Cards */}
       <div className="row mb-4">
         <div className="col-12 col-md-4 mb-3">
           <div
@@ -184,7 +183,7 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
       <div className={`table-responsive p-2 card border-0 shadow-sm rounded-4 ${darkMode ? 'bg-dark text-white' : ''}`}>
         <div className="card-body p-0">
           <table className={`table mb-0 ${darkMode ? 'table-dark' : 'table-striped'}`}>
-            <thead className={darkMode ? '' : 'table-light'}>
+            <thead className={darkMode ? 'bg-dark text-light' : 'table-light'}>
               <tr>
                 <th>Expense Name</th>
                 <th>Amount (Ksh)</th>
@@ -208,20 +207,28 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
                     <td>{expense.category}</td>
                     <td>{expense.date}</td>
                     <td>
-                      <button
-                        className="btn btn-sm btn-outline-warning me-2"
-                        onClick={() => onEdit(index)}
-                        aria-label="Edit Expense"
-                      >
-                        <FaEdit className="icon" />
-                      </button>
-                      <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => onDelete(index)}
-                        aria-label="Delete Expense"
-                      >
-                        <FaTrash className="icon" />
-                      </button>
+                      <div className="d-flex gap-2">
+                        <button
+                          className={`btn btn-sm d-flex align-items-center justify-content-center ${
+                            darkMode ? 'btn-outline-warning' : 'btn-warning text-white'
+                          }`}
+                          onClick={() => onEdit(index)}
+                          aria-label="Edit Expense"
+                          title="Edit"
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className={`btn btn-sm d-flex align-items-center justify-content-center ${
+                            darkMode ? 'btn-outline-danger' : 'btn-danger text-white'
+                          }`}
+                          onClick={() => onDelete(index)}
+                          aria-label="Delete Expense"
+                          title="Delete"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

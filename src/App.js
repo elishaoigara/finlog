@@ -11,6 +11,7 @@ import MonthlySummaryChart from './components/MonthlySummaryChart';
 import UpcomingPayments from './components/UpcomingPayments';
 import Footer from './components/Footer';
 
+
 function App() {
   const [expenses, setExpenses] = useState([]);
   const [upcomingPayments, setUpcomingPayments] = useState([]);
@@ -42,6 +43,10 @@ function App() {
     setEditingIndex(index);
   };
 
+  const cancelEdit = () => {
+    setEditingIndex(null);
+  };
+
   const addUpcomingPayment = (payment) => {
     setUpcomingPayments([...upcomingPayments, payment]);
   };
@@ -61,6 +66,7 @@ function App() {
                   <AddExpenseForm
                     onAdd={addExpense}
                     editingExpense={editingIndex !== null ? expenses[editingIndex] : null}
+                    cancelEdit={cancelEdit}
                     darkMode={darkMode}
                   />
                   <Dashboard
