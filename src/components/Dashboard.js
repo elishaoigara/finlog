@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   PieChart,
   Pie,
@@ -14,12 +14,21 @@ import {
   FaEdit,
   FaTrash,
 } from 'react-icons/fa';
+import CountUp from 'react-countup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#a86efc', '#ec407a'];
 
 function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
   const [filterCategory, setFilterCategory] = useState('All');
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userName');
+    if (storedUser) {
+      setUserName(storedUser);
+    }
+  }, []);
 
   const filteredExpenses =
     filterCategory === 'All'
@@ -63,10 +72,10 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
     `card border-0 shadow-sm text-white rounded-4 ${darkMode ? 'bg-dark' : ''}`;
 
   return (
-    <div className="container py-4">
+    <div className="container py-5">
       {/* Header and Filter */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-4">
-        <h4 className="mb-0 fw-semibold">👋 Welcome back!</h4>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+        <h4 className="mb-0 fw-semibold">👋 Welcome back{userName && `, ${userName}`}!</h4>
         <select
           className="form-select w-100 w-md-auto rounded-3 shadow-sm"
           value={filterCategory}
@@ -145,7 +154,9 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
               <FaChartPie className="me-3 fs-3 icon" />
               <div>
                 <h6 className="mb-1">Total Spending</h6>
-                <p className="mb-0">Ksh {total.toLocaleString('en-KE')}</p>
+                <p className="mb-0">
+                  <CountUp end={total} duration={1.5} prefix="Ksh " separator="," />
+                </p>
               </div>
             </div>
           </div>
@@ -173,7 +184,7 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
                 ))}
               </Pie>
               <Tooltip />
-              <Legend />
+              <Legend layout="horizontal" verticalAlign="bottom" align="center" />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -182,7 +193,7 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
       {/* Expense Table */}
       <div className={`table-responsive p-2 card border-0 shadow-sm rounded-4 ${darkMode ? 'bg-dark text-white' : ''}`}>
         <div className="card-body p-0">
-          <table className={`table mb-0 ${darkMode ? 'table-dark' : 'table-striped'}`}>
+          <table className={`table mb-0 ${darkMode ? 'table-dark' : 'table-striped table-hover'}`}>
             <thead className={darkMode ? 'bg-dark text-light' : 'table-light'}>
               <tr>
                 <th>Expense Name</th>
@@ -196,14 +207,17 @@ function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
               {filteredExpenses.length === 0 ? (
                 <tr>
                   <td colSpan="5" className="text-center text-muted py-3">
-                    No expenses in this category.
+                    <div className="text-center">
+                      <p>No expenses in this category.</p>
+                      <span role="img" aria-label="empty">📭</span>
+                    </div>
                   </td>
                 </tr>
               ) : (
                 filteredExpenses.map((expense, index) => (
                   <tr key={index}>
-                    <td className="text-truncate" style={{ maxWidth: '150px' }}>{expense.name}</td>
-                    <td>{Number(expense.amount).toLocaleString('en-KE')}</td>
+                    <td className={`text-truncate ${darkMode ? 'text-light' : ''}`} style={{ maxWidth: '150px' }}>{expense.name}</td>
+                    <td className={darkMode ? 'text-light' : ''}>{Number(expense.amount).toLocaleString('en-KE')}</td>
                     <td>{expense.category}</td>
                     <td>{expense.date}</td>
                     <td>
