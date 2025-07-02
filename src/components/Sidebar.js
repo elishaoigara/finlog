@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { FaChartBar, FaChartLine, FaCalendarCheck, FaBars, FaTimes } from 'react-icons/fa';
+import {
+  FaChartBar,
+  FaChartLine,
+  FaCalendarCheck,
+  FaBars,
+  FaTimes,
+} from 'react-icons/fa';
 
-function Sidebar({ onSectionChange }) {
+function Sidebar({ onSectionChange, darkMode }) {
   const [active, setActive] = useState('dashboard');
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isOpen, setIsOpen] = useState(!isMobile); // Open by default on desktop
@@ -23,8 +29,10 @@ function Sidebar({ onSectionChange }) {
   };
 
   const sidebarStyle = {
-    background: 'linear-gradient(to bottom, #0d6efd, #0b5ed7)',
-    color: '#fff',
+    background: darkMode
+      ? 'linear-gradient(to bottom, #1e1e2f, #2c2c54)'
+      : 'linear-gradient(to bottom, #0d6efd, #0b5ed7)',
+    color: darkMode ? '#e0e0ff' : '#fff',
     padding: '20px',
     boxShadow: '2px 0 10px rgba(0, 0, 0, 0.1)',
     position: isMobile ? 'fixed' : 'relative',
@@ -47,9 +55,9 @@ function Sidebar({ onSectionChange }) {
   };
 
   const buttonStyle = (isActive) => ({
-    backgroundColor: isActive ? '#ffffff22' : 'transparent',
+    backgroundColor: isActive ? (darkMode ? '#ffffff22' : '#ffffff22') : 'transparent',
     border: 'none',
-    color: '#fff',
+    color: darkMode ? '#e0e0ff' : '#fff',
     padding: '12px 16px',
     marginBottom: '12px',
     borderRadius: '10px',

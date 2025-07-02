@@ -11,6 +11,8 @@ import {
   FaArrowUp,
   FaArrowDown,
   FaChartPie,
+  FaEdit,
+  FaTrash,
 } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -46,8 +48,8 @@ function Dashboard({ expenses, onDelete, onEdit }) {
   const recentExpenses = expenses.filter(e => new Date(e.date) >= last7days);
   const lastWeekTotal = recentExpenses.reduce((sum, e) => sum + Number(e.amount), 0);
 
-  const previousWeekStart = new Date();
-  previousWeekStart.setDate(last7days.getDate() - 7);
+  const previousWeekStart = new Date(last7days);
+  previousWeekStart.setDate(previousWeekStart.getDate() - 7);
   const previousWeekExpenses = expenses.filter(e => {
     const d = new Date(e.date);
     return d < last7days && d >= previousWeekStart;
@@ -58,35 +60,37 @@ function Dashboard({ expenses, onDelete, onEdit }) {
   const trendPercent = previousWeekTotal === 0 ? 100 : Math.abs(((diff / previousWeekTotal) * 100).toFixed(0));
 
   return (
-    <div>
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-3">
-        <h4 className="mb-0">Welcome back!</h4>
+    <div className="container py-4">
+      {/* Header and Filter */}
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-4">
+        <h4 className="mb-0 fw-semibold">👋 Welcome back!</h4>
         <select
-          className="form-select w-100 w-md-auto"
+          className="form-select w-100 w-md-auto rounded-3 shadow-sm"
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
+          aria-label="Filter by category"
         >
           <option value="All">All Categories</option>
-          <option value="Food">Food</option>
-          <option value="Utilities">Utilities</option>
-          <option value="Transport">Transport</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Other">Other</option>
+          <option value="Food">🍔 Food</option>
+          <option value="Utilities">💡 Utilities</option>
+          <option value="Transport">🚗 Transport</option>
+          <option value="Entertainment">🎮 Entertainment</option>
+          <option value="Other">📦 Other</option>
         </select>
       </div>
 
-      {/* Smart Insights */}
+      {/* Smart Insights Cards */}
       <div className="row mb-4">
         <div className="col-12 col-md-4 mb-3">
-          <div className="card border-0 shadow-sm text-white" style={{ background: '#1976d2' }}>
+          <div className="card border-0 shadow-sm text-white rounded-4" style={{ background: 'linear-gradient(to right, #00c6ff, #0072ff)' }}>
             <div className="card-body d-flex align-items-center">
               {diff > 0 ? (
-                <FaArrowUp className="me-3 fs-3 text-white" />
+                <FaArrowUp className="me-3 fs-3 icon" />
               ) : (
-                <FaArrowDown className="me-3 fs-3 text-white" />
+                <FaArrowDown className="me-3 fs-3 icon" />
               )}
               <div>
-                <h6 className="mb-1 text-white">Spending Trend</h6>
+                <h6 className="mb-1">Spending Trend</h6>
                 <p className="mb-0">
                   {diff > 0
                     ? `Up by ${trendPercent}% from last week`
@@ -98,11 +102,11 @@ function Dashboard({ expenses, onDelete, onEdit }) {
         </div>
 
         <div className="col-12 col-md-4 mb-3">
-          <div className="card border-0 shadow-sm text-white" style={{ background: '#2196f3' }}>
+          <div className="card border-0 shadow-sm text-white rounded-4" style={{ background: 'linear-gradient(to right, #7b1fa2, #9c27b0)' }}>
             <div className="card-body d-flex align-items-center">
-              <FaChartPie className="me-3 fs-3 text-white" />
+              <FaChartPie className="me-3 fs-3 icon" />
               <div>
-                <h6 className="mb-1 text-white">Top Category</h6>
+                <h6 className="mb-1">Top Category</h6>
                 <p className="mb-0">
                   {topCategory.name} (Ksh {topCategory.value.toLocaleString('en-KE')})
                 </p>
@@ -112,11 +116,11 @@ function Dashboard({ expenses, onDelete, onEdit }) {
         </div>
 
         <div className="col-12 col-md-4 mb-3">
-          <div className="card border-0 shadow-sm text-white" style={{ background: '#42a5f5' }}>
+          <div className="card border-0 shadow-sm text-white rounded-4" style={{ background: 'linear-gradient(to right, #2196f3, #21cbf3)' }}>
             <div className="card-body d-flex align-items-center">
-              <FaChartPie className="me-3 fs-3 text-white" />
+              <FaChartPie className="me-3 fs-3 icon" />
               <div>
-                <h6 className="mb-1 text-white">Total Spending</h6>
+                <h6 className="mb-1">Total Spending</h6>
                 <p className="mb-0">Ksh {total.toLocaleString('en-KE')}</p>
               </div>
             </div>
@@ -125,74 +129,81 @@ function Dashboard({ expenses, onDelete, onEdit }) {
       </div>
 
       {/* Pie Chart */}
-      <div className="mb-4" style={{ height: 300 }}>
-        <ResponsiveContainer>
-          <PieChart>
-            <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              fill="#8884d8"
-              label
-            >
-              {chartData.map((entry, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
+      <div className="mb-4 card shadow-sm border-0 rounded-4">
+        <div className="card-body" style={{ height: 300 }}>
+          <ResponsiveContainer>
+            <PieChart>
+              <Pie
+                data={chartData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#8884d8"
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                isAnimationActive
+              >
+                {chartData.map((entry, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       {/* Expense Table */}
-      <div className="table-responsive p-2">
-        <table className="table table-bordered table-striped">
-          <thead className="table-light">
-            <tr>
-              <th>Expense Name</th>
-              <th>Amount (Ksh)</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredExpenses.length === 0 ? (
+      <div className="table-responsive p-2 card border-0 shadow-sm rounded-4">
+        <div className="card-body p-0">
+          <table className="table table-striped mb-0">
+            <thead className="table-light">
               <tr>
-                <td colSpan="5" className="text-center">
-                  No expenses in this category.
-                </td>
+                <th>Expense Name</th>
+                <th>Amount (Ksh)</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Actions</th>
               </tr>
-            ) : (
-              filteredExpenses.map((expense, index) => (
-                <tr key={index}>
-                  <td>{expense.name}</td>
-                  <td>{Number(expense.amount).toLocaleString('en-KE')}</td>
-                  <td>{expense.category}</td>
-                  <td>{expense.date}</td>
-                  <td>
-                    <button
-                      className="btn btn-sm btn-warning me-2"
-                      onClick={() => onEdit(index)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => onDelete(index)}
-                    >
-                      Delete
-                    </button>
+            </thead>
+            <tbody>
+              {filteredExpenses.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="text-center text-muted py-3">
+                    No expenses in this category.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredExpenses.map((expense, index) => (
+                  <tr key={index}>
+                    <td className="text-truncate" style={{ maxWidth: '150px' }}>{expense.name}</td>
+                    <td>{Number(expense.amount).toLocaleString('en-KE')}</td>
+                    <td>{expense.category}</td>
+                    <td>{expense.date}</td>
+                    <td>
+                      <button
+                        className="btn btn-sm btn-outline-warning me-2"
+                        onClick={() => onEdit(index)}
+                        aria-label="Edit Expense"
+                      >
+                        <FaEdit className="icon" />
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={() => onDelete(index)}
+                        aria-label="Delete Expense"
+                      >
+                        <FaTrash className="icon" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

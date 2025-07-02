@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -16,6 +16,12 @@ function App() {
   const [upcomingPayments, setUpcomingPayments] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [section, setSection] = useState('dashboard');
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    document.body.className = darkMode ? 'dark-mode' : '';
+  }, [darkMode]);
 
   const addExpense = (expense) => {
     if (editingIndex !== null) {
@@ -42,12 +48,12 @@ function App() {
   };
 
   return (
-    <div className="App d-flex flex-column min-vh-100">
-      <Navbar />
+    <div className={`App d-flex flex-column min-vh-100 ${darkMode ? 'dark-bg text-light' : ''}`}>
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <div className="container-fluid flex-grow-1">
         <div className="row">
           <div className="col-md-3">
-            <Sidebar onSectionChange={setSection} />
+            <Sidebar onSectionChange={setSection} darkMode={darkMode} />
           </div>
           <div className="col-md-9">
             <div className="container mt-4">

@@ -1,7 +1,12 @@
+/* ----------------------------------- */
+/* Base Light Mode Styles              */
+/* ----------------------------------- */
+
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   background: #f4f7fb;
+  color: #333;
 }
 
 .navbar {
@@ -38,6 +43,21 @@ body {
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.card .icon {
+  color: #4f46e5;
+  background-color: rgba(79, 70, 229, 0.1);
+  padding: 8px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-expense input {
@@ -68,4 +88,67 @@ body {
   justify-content: space-between;
   padding: 0.5rem 0;
   border-bottom: 1px solid #eee;
+}
+
+/* ----------------------------------- */
+/* ✅ DARK MODE STYLES BELOW           */
+/* ----------------------------------- */
+
+body.dark-mode {
+  background: #1e1e2f;
+  color: #eaeaea;
+}
+
+body.dark-mode .navbar {
+  background: #2c2c54;
+  color: #ffffff;
+}
+
+body.dark-mode .navbar nav a {
+  color: #e0e0ff;
+}
+
+body.dark-mode .card {
+  background: #2a2a40;
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .card .icon {
+  color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .add-expense input,
+body.dark-mode select,
+body.dark-mode input {
+  background-color: #3a3a50;
+  color: #ffffff;
+  border-color: #555;
+}
+
+body.dark-mode select option {
+  background-color: #2f2f45;
+  color: #f0f0f0;
+}
+
+body.dark-mode .add-expense button,
+body.dark-mode .btn {
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+}
+
+body.dark-mode .btn-outline-warning {
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+body.dark-mode .btn-outline-danger {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+body.dark-mode .expense-list li {
+  border-bottom: 1px solid #444;
 }
