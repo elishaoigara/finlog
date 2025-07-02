@@ -12,8 +12,8 @@ function Footer({ darkMode }) {
   const footerStyle = {
     background: darkMode ? '#121212' : '#0d6efd',
     color: textColor,
-    padding: '2rem 1rem', // smaller padding
-    fontSize: '0.875rem',
+    padding: '2rem 1rem', // Reduced vertical padding
+    fontSize: '0.875rem', // Slightly smaller base font
   };
 
   const headingStyle = {
@@ -33,7 +33,7 @@ function Footer({ darkMode }) {
   const iconStyle = {
     color: textColor,
     fontSize: '1rem',
-    marginRight: '0.8rem',
+    marginRight: '0.75rem',
   };
 
   return (
@@ -44,7 +44,7 @@ function Footer({ darkMode }) {
           <div className="col-12 col-sm-6 col-md-3">
             <h5 style={headingStyle}>FinLog</h5>
             <p style={{ marginBottom: '0.5rem' }}>
-              Your financial companion.
+              Your financial companion. Save smart, live better.
             </p>
             <p className="mb-0">&copy; 2025 Elisha Oigara</p>
           </div>
@@ -76,7 +76,7 @@ function Footer({ darkMode }) {
               <FaLinkedinIn style={iconStyle} />
               <FaEnvelope style={iconStyle} />
             </div>
-            <p style={{ marginBottom: 0 }}>Follow us for updates.</p>
+            <p className="mb-0">Follow us for updates.</p>
           </div>
         </div>
       </div>
