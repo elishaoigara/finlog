@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer style={{ backgroundColor: '#0d6efd', color: 'white' }} className="py-4 mt-5">
+    <footer className="footer py-4 mt-5 text-white">
       <div className="container text-center">
         <p className="mb-2">&copy; 2025 Elisha Oigara. All rights reserved.</p>
         <div className="d-flex justify-content-center gap-3">

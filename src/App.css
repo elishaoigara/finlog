@@ -152,3 +152,66 @@ body.dark-mode .btn-outline-danger {
 body.dark-mode .expense-list li {
   border-bottom: 1px solid #444;
 }
+/* Tables */
+body.dark-mode .table {
+  background-color: #2a2a40;
+  color: #eaeaea;
+}
+
+body.dark-mode .table thead {
+  background-color: #3a3a55;
+  color: #ffffff;
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+  background-color: #2f2f47;
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(even) {
+  background-color: #252539;
+}
+
+body.dark-mode .table td,
+body.dark-mode .table th {
+  border-color: #444;
+}
+
+/* .text-muted override */
+body.dark-mode .text-muted {
+  color: #bbbbbb !important;
+}
+
+/* Tooltip (if using recharts or bootstrap tooltips) */
+body.dark-mode .recharts-default-tooltip {
+  background-color: #333 !important;
+  color: white !important;
+  border: 1px solid #444 !important;
+}
+
+/* Legend override if using Recharts */
+body.dark-mode .recharts-legend-item-text {
+  fill: #eee !important;
+}
+/* Gradient Cards */
+.gradient-blue {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+}
+.gradient-purple {
+  background: linear-gradient(to right, #7b1fa2, #9c27b0);
+}
+.gradient-cyan {
+  background: linear-gradient(to right, #2196f3, #21cbf3);
+}
+
+/* Dark mode overrides */
+body.dark-mode .gradient-blue {
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+}
+
+body.dark-mode .gradient-purple {
+  background: linear-gradient(to right, #4a148c, #6a1b9a);
+}
+
+body.dark-mode .gradient-cyan {
+  background: linear-gradient(to right, #1565c0, #1e88e5);
+}

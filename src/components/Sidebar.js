@@ -10,13 +10,13 @@ import {
 function Sidebar({ onSectionChange, darkMode }) {
   const [active, setActive] = useState('dashboard');
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [isOpen, setIsOpen] = useState(!isMobile); // Open by default on desktop
+  const [isOpen, setIsOpen] = useState(!isMobile);
 
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      setIsOpen(!mobile); // Auto-close if switching to mobile
+      setIsOpen(!mobile);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -29,12 +29,12 @@ function Sidebar({ onSectionChange, darkMode }) {
   };
 
   const sidebarStyle = {
-    background: darkMode
-      ? 'linear-gradient(to bottom, #1e1e2f, #2c2c54)'
-      : 'linear-gradient(to bottom, #0d6efd, #0b5ed7)',
+    background: darkMode ? '#1f1f33' : '#0d6efd',
     color: darkMode ? '#e0e0ff' : '#fff',
     padding: '20px',
-    boxShadow: '2px 0 10px rgba(0, 0, 0, 0.1)',
+    boxShadow: darkMode
+      ? '2px 0 10px rgba(255, 255, 255, 0.05)'
+      : '2px 0 10px rgba(0, 0, 0, 0.1)',
     position: isMobile ? 'fixed' : 'relative',
     top: 0,
     left: isOpen ? 0 : '-240px',
@@ -55,7 +55,11 @@ function Sidebar({ onSectionChange, darkMode }) {
   };
 
   const buttonStyle = (isActive) => ({
-    backgroundColor: isActive ? (darkMode ? '#ffffff22' : '#ffffff22') : 'transparent',
+    backgroundColor: isActive
+      ? darkMode
+        ? '#292945'
+        : '#ffffff22'
+      : 'transparent',
     border: 'none',
     color: darkMode ? '#e0e0ff' : '#fff',
     padding: '12px 16px',
@@ -68,12 +72,12 @@ function Sidebar({ onSectionChange, darkMode }) {
     alignItems: 'center',
     gap: '12px',
     fontSize: '1rem',
-    transition: 'all 0.3s ease',
+    transition: 'all 0.2s ease-in-out',
+    cursor: 'pointer',
   });
 
   return (
     <>
-      {/* Hamburger button on mobile */}
       {isMobile && (
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -82,7 +86,7 @@ function Sidebar({ onSectionChange, darkMode }) {
             top: 15,
             left: 15,
             zIndex: 1100,
-            backgroundColor: '#0d6efd',
+            backgroundColor: darkMode ? '#292945' : '#0d6efd',
             color: 'white',
             border: 'none',
             padding: '10px 12px',
@@ -93,29 +97,26 @@ function Sidebar({ onSectionChange, darkMode }) {
         </button>
       )}
 
-      {/* Overlay when sidebar is open on mobile */}
-      {isMobile && isOpen && <div style={overlayStyle} onClick={() => setIsOpen(false)} />}
+      {isMobile && isOpen && (
+        <div style={overlayStyle} onClick={() => setIsOpen(false)} />
+      )}
 
       <div style={sidebarStyle}>
-        <h4 className="mb-4 text-center" style={{ fontWeight: '600' }}>
-          FINLOG
-        </h4>
+        <h4 className="mb-4 text-center fw-bold">FINLOG</h4>
+
         <button
-          className="btn"
           style={buttonStyle(active === 'dashboard')}
           onClick={() => handleClick('dashboard')}
         >
           <FaChartBar /> Dashboard
         </button>
         <button
-          className="btn"
           style={buttonStyle(active === 'reports')}
           onClick={() => handleClick('reports')}
         >
           <FaChartLine /> Reports
         </button>
         <button
-          className="btn"
           style={buttonStyle(active === 'upcoming')}
           onClick={() => handleClick('upcoming')}
         >

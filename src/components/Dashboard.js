@@ -18,7 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#a86efc', '#ec407a'];
 
-function Dashboard({ expenses, onDelete, onEdit }) {
+function Dashboard({ expenses, onDelete, onEdit, darkMode }) {
   const [filterCategory, setFilterCategory] = useState('All');
 
   const filteredExpenses =
@@ -59,6 +59,10 @@ function Dashboard({ expenses, onDelete, onEdit }) {
   const diff = lastWeekTotal - previousWeekTotal;
   const trendPercent = previousWeekTotal === 0 ? 100 : Math.abs(((diff / previousWeekTotal) * 100).toFixed(0));
 
+  // Style helper for dark-aware card backgrounds
+  const getCardClass = (baseColor) =>
+    `card border-0 shadow-sm text-white rounded-4 ${darkMode ? 'bg-dark' : ''}`;
+
   return (
     <div className="container py-4">
       {/* Header and Filter */}
@@ -82,7 +86,14 @@ function Dashboard({ expenses, onDelete, onEdit }) {
       {/* Smart Insights Cards */}
       <div className="row mb-4">
         <div className="col-12 col-md-4 mb-3">
-          <div className="card border-0 shadow-sm text-white rounded-4" style={{ background: 'linear-gradient(to right, #00c6ff, #0072ff)' }}>
+          <div
+            className={getCardClass()}
+            style={{
+              background: darkMode
+                ? '#2c2c54'
+                : 'linear-gradient(to right, #00c6ff, #0072ff)',
+            }}
+          >
             <div className="card-body d-flex align-items-center">
               {diff > 0 ? (
                 <FaArrowUp className="me-3 fs-3 icon" />
@@ -102,7 +113,14 @@ function Dashboard({ expenses, onDelete, onEdit }) {
         </div>
 
         <div className="col-12 col-md-4 mb-3">
-          <div className="card border-0 shadow-sm text-white rounded-4" style={{ background: 'linear-gradient(to right, #7b1fa2, #9c27b0)' }}>
+          <div
+            className={getCardClass()}
+            style={{
+              background: darkMode
+                ? '#2a2a40'
+                : 'linear-gradient(to right, #7b1fa2, #9c27b0)',
+            }}
+          >
             <div className="card-body d-flex align-items-center">
               <FaChartPie className="me-3 fs-3 icon" />
               <div>
@@ -116,7 +134,14 @@ function Dashboard({ expenses, onDelete, onEdit }) {
         </div>
 
         <div className="col-12 col-md-4 mb-3">
-          <div className="card border-0 shadow-sm text-white rounded-4" style={{ background: 'linear-gradient(to right, #2196f3, #21cbf3)' }}>
+          <div
+            className={getCardClass()}
+            style={{
+              background: darkMode
+                ? '#263245'
+                : 'linear-gradient(to right, #2196f3, #21cbf3)',
+            }}
+          >
             <div className="card-body d-flex align-items-center">
               <FaChartPie className="me-3 fs-3 icon" />
               <div>
@@ -129,7 +154,7 @@ function Dashboard({ expenses, onDelete, onEdit }) {
       </div>
 
       {/* Pie Chart */}
-      <div className="mb-4 card shadow-sm border-0 rounded-4">
+      <div className={`mb-4 card shadow-sm border-0 rounded-4 ${darkMode ? 'bg-dark text-white' : ''}`}>
         <div className="card-body" style={{ height: 300 }}>
           <ResponsiveContainer>
             <PieChart>
@@ -156,10 +181,10 @@ function Dashboard({ expenses, onDelete, onEdit }) {
       </div>
 
       {/* Expense Table */}
-      <div className="table-responsive p-2 card border-0 shadow-sm rounded-4">
+      <div className={`table-responsive p-2 card border-0 shadow-sm rounded-4 ${darkMode ? 'bg-dark text-white' : ''}`}>
         <div className="card-body p-0">
-          <table className="table table-striped mb-0">
-            <thead className="table-light">
+          <table className={`table mb-0 ${darkMode ? 'table-dark' : 'table-striped'}`}>
+            <thead className={darkMode ? '' : 'table-light'}>
               <tr>
                 <th>Expense Name</th>
                 <th>Amount (Ksh)</th>

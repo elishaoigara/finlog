@@ -16,7 +16,6 @@ function App() {
   const [upcomingPayments, setUpcomingPayments] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [section, setSection] = useState('dashboard');
-
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
@@ -61,32 +60,33 @@ function App() {
                 <>
                   <AddExpenseForm
                     onAdd={addExpense}
-                    editingExpense={
-                      editingIndex !== null ? expenses[editingIndex] : null
-                    }
+                    editingExpense={editingIndex !== null ? expenses[editingIndex] : null}
+                    darkMode={darkMode}
                   />
                   <Dashboard
                     expenses={expenses}
                     onDelete={deleteExpense}
                     onEdit={startEditing}
+                    darkMode={darkMode}
                   />
-                  <ExpenseChart expenses={expenses} />
+                  <ExpenseChart expenses={expenses} darkMode={darkMode} />
                 </>
               )}
               {section === 'reports' && (
-                <MonthlySummaryChart expenses={expenses} />
+                <MonthlySummaryChart expenses={expenses} darkMode={darkMode} />
               )}
               {section === 'upcoming' && (
                 <UpcomingPayments
                   upcomingPayments={upcomingPayments}
                   onAdd={addUpcomingPayment}
+                  darkMode={darkMode}
                 />
               )}
             </div>
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer darkMode={darkMode} />
     </div>
   );
 }
