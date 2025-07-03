@@ -23,13 +23,13 @@ function Navbar({ darkMode, setDarkMode }) {
         padding: '0.75rem 1rem',
         color: darkMode ? '#eaeaea' : '#fff',
         zIndex: 1000,
+        position: 'relative',
       }}
     >
       <div className="container-fluid d-flex justify-content-between align-items-center">
-
-        {/* Text Brand */}
+        {/* Centered Brand for Mobile, Static for Desktop */}
         <span
-          className="navbar-brand mb-0"
+          className="navbar-brand mb-0 position-absolute start-50 translate-middle-x d-lg-static"
           style={{
             fontWeight: '700',
             fontSize: '1.6rem',
@@ -42,7 +42,6 @@ function Navbar({ darkMode, setDarkMode }) {
 
         {/* Right Side: Toggle + Logout */}
         <div className="d-flex align-items-center gap-2 ms-auto">
-
           {/* Dark Mode Toggle */}
           <motion.button
             onClick={() => setDarkMode(!darkMode)}
