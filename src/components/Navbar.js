@@ -5,6 +5,7 @@ import { FaMoon, FaSun } from 'react-icons/fa';
 
 function Navbar({ darkMode, setDarkMode }) {
   const navigate = useNavigate();
+  const finlogLetters = 'FINLOG'.split('');
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
@@ -26,23 +27,10 @@ function Navbar({ darkMode, setDarkMode }) {
         position: 'relative',
       }}
     >
-      <div className="container-fluid d-flex justify-content-between align-items-center">
-        {/* Centered Brand for Mobile, Static for Desktop */}
-        <span
-          className="navbar-brand mb-0 position-absolute start-50 translate-middle-x d-lg-static"
-          style={{
-            fontWeight: '700',
-            fontSize: '1.6rem',
-            color: 'inherit',
-            letterSpacing: '1px',
-          }}
-        >
-          FINLOG
-        </span>
+      <div className="container-fluid position-relative d-flex align-items-center justify-content-between">
 
-        {/* Right Side: Toggle + Logout */}
-        <div className="d-flex align-items-center gap-2 ms-auto">
-          {/* Dark Mode Toggle */}
+        {/* Dark Mode + Logout - Right Aligned */}
+        <div className="d-flex align-items-center gap-2 ms-auto order-3 order-lg-2">
           <motion.button
             onClick={() => setDarkMode(!darkMode)}
             className="btn btn-outline-light btn-sm d-flex align-items-center justify-content-center"
@@ -57,7 +45,6 @@ function Navbar({ darkMode, setDarkMode }) {
             {darkMode ? <FaSun /> : <FaMoon />}
           </motion.button>
 
-          {/* Logout Button */}
           <motion.button
             onClick={handleLogout}
             className="btn btn-light btn-sm"
@@ -77,6 +64,40 @@ function Navbar({ darkMode, setDarkMode }) {
             Logout
           </motion.button>
         </div>
+
+        {/* FINLOG Centered on Mobile */}
+        <motion.div
+          className="position-absolute top-50 start-50 translate-middle d-lg-static d-flex gap-1 align-items-center order-1"
+          style={{
+            fontWeight: 700,
+            fontSize: '1.5rem',
+            color: 'inherit',
+            zIndex: 10,
+          }}
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.12,
+              },
+            },
+          }}
+        >
+          {finlogLetters.map((letter, index) => (
+            <motion.span
+              key={index}
+              variants={{
+                hidden: { opacity: 0, y: -10 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.3 }}
+              style={{ color: 'inherit' }}
+            >
+              {letter}
+            </motion.span>
+          ))}
+        </motion.div>
       </div>
     </nav>
   );
