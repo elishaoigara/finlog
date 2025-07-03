@@ -5,7 +5,6 @@ import { FaMoon, FaSun } from 'react-icons/fa';
 
 function Navbar({ darkMode, setDarkMode }) {
   const navigate = useNavigate();
-  const finlogLetters = 'FINLOG'.split('');
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
@@ -28,34 +27,18 @@ function Navbar({ darkMode, setDarkMode }) {
     >
       <div className="container-fluid d-flex justify-content-between align-items-center">
 
-        {/* Animated Brand for all screen sizes */}
-        <motion.div
-          className="navbar-brand mb-0 d-flex gap-1 align-items-center"
-          style={{ fontWeight: 700, fontSize: '1.5rem', color: 'inherit' }}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: {
-              transition: {
-                staggerChildren: 0.12,
-              },
-            },
+        {/* Text Brand */}
+        <span
+          className="navbar-brand mb-0"
+          style={{
+            fontWeight: '700',
+            fontSize: '1.6rem',
+            color: 'inherit',
+            letterSpacing: '1px',
           }}
         >
-          {finlogLetters.map((letter, index) => (
-            <motion.span
-              key={index}
-              variants={{
-                hidden: { opacity: 0, y: -10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.3 }}
-              style={{ color: 'inherit' }}
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </motion.div>
+          FINLOG
+        </span>
 
         {/* Right Side: Toggle + Logout */}
         <div className="d-flex align-items-center gap-2 ms-auto">
